@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Categories - MyShop{% endblock %}
+
+{% block content %}
+
+<section class="mb-4 text-center">
+  <h2 class="fw-bold">Categories</h2>
+  <p class="text-muted">Browse products by category</p>
+</section>
+
+{% if categories %}
+<div class="row g-4 justify-content-center">
+  {% for category in categories %}
+    <div class="col-md-2 col-6 text-center">
+      <a href="{{ url_for('category_page', category_id=category.id) }}" class="text-decoration-none text-dark">
+        <div class="card p-4 shadow-sm h-100">
+          <i class="fa fa-tags fa-3x mb-3 text-primary"></i>
+          <h6>{{ category.name }}</h6>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-5">
+  <h4>No categories available.</h4>
+  <a href="{{ url_for('products') }}" class="btn btn-primary mt-3"><i class="fa fa-shopping-bag"></i> Browse Products</a>
+</div>
+{% endif %}
+
+{% endblock %}

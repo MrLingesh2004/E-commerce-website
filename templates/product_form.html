@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="mb-4 text-center">{{ 'Edit' if product else 'Add' }} Product</h2>
+        <form method="POST" action="">
+            <div class="mb-3">
+                <label for="name" class="form-label">Product Name</label>
+                <input type="text" name="name" class="form-control" id="name" 
+                       value="{{ product.name if product else '' }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" step="0.01" name="price" class="form-control" id="price" 
+                       value="{{ product.price if product else '' }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="stock" class="form-label">Stock</label>
+                <input type="number" name="stock" class="form-control" id="stock" 
+                       value="{{ product.stock if product else '0' }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea name="description" class="form-control" id="description" rows="4">{{ product.description if product else '' }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Image URL (optional)</label>
+                <input type="url" name="image" class="form-control" id="image" 
+                       value="{{ product.image if product else '' }}">
+            </div>
+            <button type="submit" class="btn btn-success w-100">{{ 'Update' if product else 'Add' }} Product</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Your Orders</h2>
+{% if orders %}
+    {% for order in orders %}
+    <div class="card mb-3">
+        <div class="card-header d-flex justify-content-between">
+            <span>Order #{{ order.id }} | {{ order.created_at.strftime('%d-%m-%Y') }}</span>
+            <span>Status: <strong>{{ order.status }}</strong></span>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set ns = namespace(total=0) %}
+                    {% for item in order.items %}
+                        {% set subtotal = item.quantity * item.price %}
+                        {% set ns.total = ns.total + subtotal %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>₹ {{ item.price }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>₹ {{ subtotal }}</td>
+                            <td>
+                                {% if order.status == "Pending" %}
+                                    <a href="{{ url_for('cancel_order', order_id=order.id) }}" class="btn btn-sm btn-danger">Cancel</a>
+                                {% else %}
+                                    <span class="text-muted">No actions</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="3" class="text-end fw-bold">Total:</td>
+                        <td colspan="2" class="fw-bold">₹ {{ ns.total }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+<p class="text-center">You have no orders yet.</p>
+{% endif %}
+{% endblock %}

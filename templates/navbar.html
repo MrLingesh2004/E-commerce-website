@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">MyShop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Left side -->
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('categories_page') }}">Categories</a>
+                </li>
+            </ul>
+
+            <!-- Right side -->
+            <ul class="navbar-nav ms-auto">
+                {% if session.get('user_id') %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('orders') }}">My Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('wishlist') }}">My Wishlist</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('profile') }}">My Account</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('cart') }}">My Cart</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger" href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
